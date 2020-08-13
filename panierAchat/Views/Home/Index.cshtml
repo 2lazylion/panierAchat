@@ -2,7 +2,38 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<!-- container principal -->
+<div class="container bg-light fill" style="min-height: 100vh; height: 100vh;">
+    <!-- titre -->
+    <div class="row">
+        <div class=" col-lg-10 offset-1">
+            <h1 class="display-4 mb-3">Connexion</h1>
+        </div>
+    </div>
+
+    <!-- formulaire de login -->
+    <div class="row">
+        <div class=" col-lg-10 offset-2">
+            <form asp-controller="Home" asp-action="Login">
+                <div class="form-group">
+                    <label for="utilisateur"> Nom d'utilisateur </label>
+                    <input type="text" class="form-control col-7" id="utilisateur" name="utilisateur" placeholder="entrer votre nom d'utilisateur">
+                    <!--  div class="valid-feedback" -->
+                </div>
+                <div class="form-group">
+                    <label for="mdp"> Mot de passe </label>
+                    <input type="password" class="form-control col-7" id="mdp" name="mdp" placeholder="Mot de passe">
+                </div>
+                <button type="submit" class="btn btn-primary"> Connexion </button>
+            </form>
+        </div>
+    </div>
+    <div class="row offset-2 pt-2">
+        <br>
+        <br>
+        <br>
+        <br>
+        <a asp-area="" asp-controller="Customers" asp-action="Create"> Nouveau? Inscrivez-vous! </a>
+    </div>
 </div>
+

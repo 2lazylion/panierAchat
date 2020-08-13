@@ -28,6 +28,12 @@ namespace panierAchat.Controllers
             return View();
         }
 
+        //TODO: verifier l'utilisateur 
+        public IActionResult Login()
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

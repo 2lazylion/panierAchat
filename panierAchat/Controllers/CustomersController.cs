@@ -52,6 +52,7 @@ namespace panierAchat.Controllers
         // POST: Customers/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // TODO: Rajouter dans le form Address
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CustomerId,Nom,Prenom,Telephone")] Customer customer)
