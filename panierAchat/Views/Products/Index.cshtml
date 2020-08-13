@@ -1,0 +1,107 @@
+﻿@model IEnumerable<panierAchat.Models.Product>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<!--
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+-->
+<!-- container principal -->
+    <div class="container bg-light fill" style="min-height: 100vh; height: 100vh; border: 2px solid grey;">
+
+        <!-- titre -->
+        <header class="jumbotron my-4 pb-2" style="border: 1px solid grey;">
+            <h1 class="display-3"> Liste de nos produits </h1>
+            <p class="lead"> Vous trouverez ici une liste de produits. Bon magasinage! </p>
+        </header>
+
+        <!-- liste des produits -->
+        <form name="produitsForm" action="ShoppingServlet" method="POST">
+            <div class="text-center row" id="cards">
+
+                @foreach (var item in Model)
+                {
+                    <div class="col-3 p-2">
+                        <div class="card ">
+                            <div class="card-body">
+                                <h4 class="card-title" name="nom">@Html.DisplayFor(modelItem => item.Nom)</h4>
+                                <p class="card-text" name="marque">@Html.DisplayFor(modelItem => item.Marque)</p>
+                                <p class="card-text" name="qteStock">Qté en stock: @Html.DisplayFor(modelItem => item.QuantiteStock)</p>
+                                <h5 class="card-title" name="prixUnitaire">@Html.DisplayFor(modelItem => item.PrixUnitaire)</h5>
+                            </div>
+                            <div class="card-footer">
+                                <input type="checkbox">
+                                <!-- <input type="hidden" name="ajoutindex" value="${index}"> -->
+                                <input type="hidden" name="action" value="add">
+                                <button type="button" type="submit" class="btn btn-primary"> Ajouter </button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </form>
+    </div>
+
+        <!--
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nom)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PrixUnitaire)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.QuantiteStock)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Marque)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Categorie)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nom)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PrixUnitaire)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.QuantiteStock)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Marque)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Categorie)
+                    </td>
+
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ProductId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
+                </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+    -->
+    </div>

@@ -10,87 +10,85 @@ using panierAchat.Models;
 
 namespace panierAchat.Controllers
 {
-    public class CustomersController : Controller
+    public class ProductsController : Controller
     {
         private readonly panierAchatContext _context;
 
-        public CustomersController(panierAchatContext context)
+        public ProductsController(panierAchatContext context)
         {
             _context = context;
         }
 
-        // GET: Customers
+        // GET: Products
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Customer.ToListAsync());
+            return View(await _context.Product.ToListAsync());
         }
 
-        // GET: Customers/Details/5
-        public async Task<IActionResult> Details(int? id)
+        // GET: Products/Details/5
+        public async Task<IActionResult> Details(long? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var customer = await _context.Customer
-                .FirstOrDefaultAsync(m => m.CustomerId == id);
-            if (customer == null)
+            var product = await _context.Product
+                .FirstOrDefaultAsync(m => m.ProductId == id);
+            if (product == null)
             {
                 return NotFound();
             }
 
-            return View(customer);
+            return View(product);
         }
 
-        // GET: Customers/Create
+        // GET: Products/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Customers/Create
+        // POST: Products/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        // TODO: Rajouter dans le form Address
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CustomerId,Nom,Prenom,Telephone")] Customer customer)
+        public async Task<IActionResult> Create([Bind("ProductId,Nom,PrixUnitaire,QuantiteStock,Description,Marque,Categorie")] Product product)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(customer);
+                _context.Add(product);
                 await _context.SaveChangesAsync();
-                // redirect vers Products/Index
                 return RedirectToAction(nameof(Index));
             }
-            return View(customer);
+            return View(product);
         }
 
-        // GET: Customers/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        // GET: Products/Edit/5
+        public async Task<IActionResult> Edit(long? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var customer = await _context.Customer.FindAsync(id);
-            if (customer == null)
+            var product = await _context.Product.FindAsync(id);
+            if (product == null)
             {
                 return NotFound();
             }
-            return View(customer);
+            return View(product);
         }
 
-        // POST: Customers/Edit/5
+        // POST: Products/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CustomerId,Nom,Prenom,Telephone")] Customer customer)
+        public async Task<IActionResult> Edit(long id, [Bind("ProductId,Nom,PrixUnitaire,QuantiteStock,Description,Marque,Categorie")] Product product)
         {
-            if (id != customer.CustomerId)
+            if (id != product.ProductId)
             {
                 return NotFound();
             }
@@ -99,12 +97,12 @@ namespace panierAchat.Controllers
             {
                 try
                 {
-                    _context.Update(customer);
+                    _context.Update(product);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CustomerExists(customer.CustomerId))
+                    if (!ProductExists(product.ProductId))
                     {
                         return NotFound();
                     }
@@ -115,41 +113,41 @@ namespace panierAchat.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(customer);
+            return View(product);
         }
 
-        // GET: Customers/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        // GET: Products/Delete/5
+        public async Task<IActionResult> Delete(long? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var customer = await _context.Customer
-                .FirstOrDefaultAsync(m => m.CustomerId == id);
-            if (customer == null)
+            var product = await _context.Product
+                .FirstOrDefaultAsync(m => m.ProductId == id);
+            if (product == null)
             {
                 return NotFound();
             }
 
-            return View(customer);
+            return View(product);
         }
 
-        // POST: Customers/Delete/5
+        // POST: Products/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(long id)
         {
-            var customer = await _context.Customer.FindAsync(id);
-            _context.Customer.Remove(customer);
+            var product = await _context.Product.FindAsync(id);
+            _context.Product.Remove(product);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CustomerExists(int id)
+        private bool ProductExists(long id)
         {
-            return _context.Customer.Any(e => e.CustomerId == id);
+            return _context.Product.Any(e => e.ProductId == id);
         }
     }
 }
