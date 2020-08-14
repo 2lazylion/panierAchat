@@ -27,7 +27,7 @@ namespace panierAchat
         {
             services.AddControllersWithViews();
 
-            services.AddDbContext<panierAchatContext>(options =>
+            services.AddDbContext<PanierAchatContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("panierAchatContext")));
         }
 

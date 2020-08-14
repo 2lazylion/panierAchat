@@ -5,27 +5,28 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using panierAchat.Data;
 using panierAchat.Models;
 
 namespace panierAchat.Controllers
 {
-    public class ProductsController : Controller
+    public class CredentialsController : Controller
     {
         private readonly PanierAchatContext _context;
 
-        public ProductsController(PanierAchatContext context)
+        public CredentialsController(PanierAchatContext context)
         {
             _context = context;
         }
 
-        // GET: Products
+        // GET: Credentials
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Product.ToListAsync());
+            return View(await _context.Credentials.ToListAsync());
         }
 
-        // GET: Products/Details/5
+        // GET: Credentials/Details/5
         public async Task<IActionResult> Details(long? id)
         {
             if (id == null)
@@ -33,39 +34,44 @@ namespace panierAchat.Controllers
                 return NotFound();
             }
 
-            var product = await _context.Product
-                .FirstOrDefaultAsync(m => m.ProductId == id);
-            if (product == null)
+            var credentials = await _context.Credentials
+                .FirstOrDefaultAsync(m => m.CredentialsId == id);
+            if (credentials == null)
             {
                 return NotFound();
             }
 
-            return View(product);
+            return View(credentials);
         }
 
-        // GET: Products/Create
+        // GET: Credentials/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Products/Create
+        // POST: Credentials/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProductId,Nom,PrixUnitaire,QuantiteStock,Description,Marque,Categorie")] Product product)
+        public async Task<IActionResult> Create([Bind("CredentialsId,Username,Password")] Credentials credentials)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(product);
+                //Add scrambled password to database instead of the user input one
+                string pwd = credentials.Password;
+                string scrambledPwd = Utilities.ScramblePwd(pwd);
+                credentials.Password = scrambledPwd;
+
+                _context.Add(credentials);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(product);
+            return View(await _context.);
         }
 
-        // GET: Products/Edit/5
+        // GET: Credentials/Edit/5
         public async Task<IActionResult> Edit(long? id)
         {
             if (id == null)
@@ -73,22 +79,22 @@ namespace panierAchat.Controllers
                 return NotFound();
             }
 
-            var product = await _context.Product.FindAsync(id);
-            if (product == null)
+            var credentials = await _context.Credentials.FindAsync(id);
+            if (credentials == null)
             {
                 return NotFound();
             }
-            return View(product);
+            return View(credentials);
         }
 
-        // POST: Products/Edit/5
+        // POST: Credentials/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("ProductId,Nom,PrixUnitaire,QuantiteStock,Description,Marque,Categorie")] Product product)
+        public async Task<IActionResult> Edit(long id, [Bind("CredentialsId,Username,Password")] Credentials credentials)
         {
-            if (id != product.ProductId)
+            if (id != credentials.CredentialsId)
             {
                 return NotFound();
             }
@@ -97,12 +103,12 @@ namespace panierAchat.Controllers
             {
                 try
                 {
-                    _context.Update(product);
+                    _context.Update(credentials);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProductExists(product.ProductId))
+                    if (!CredentialsExists(credentials.CredentialsId))
                     {
                         return NotFound();
                     }
@@ -113,10 +119,10 @@ namespace panierAchat.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(product);
+            return View(credentials);
         }
 
-        // GET: Products/Delete/5
+        // GET: Credentials/Delete/5
         public async Task<IActionResult> Delete(long? id)
         {
             if (id == null)
@@ -124,30 +130,30 @@ namespace panierAchat.Controllers
                 return NotFound();
             }
 
-            var product = await _context.Product
-                .FirstOrDefaultAsync(m => m.ProductId == id);
-            if (product == null)
+            var credentials = await _context.Credentials
+                .FirstOrDefaultAsync(m => m.CredentialsId == id);
+            if (credentials == null)
             {
                 return NotFound();
             }
 
-            return View(product);
+            return View(credentials);
         }
 
-        // POST: Products/Delete/5
+        // POST: Credentials/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long id)
         {
-            var product = await _context.Product.FindAsync(id);
-            _context.Product.Remove(product);
+            var credentials = await _context.Credentials.FindAsync(id);
+            _context.Credentials.Remove(credentials);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ProductExists(long id)
+        private bool CredentialsExists(long id)
         {
-            return _context.Product.Any(e => e.ProductId == id);
+            return _context.Credentials.Any(e => e.CredentialsId == id);
         }
     }
 }

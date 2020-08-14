@@ -12,9 +12,9 @@ namespace panierAchat.Controllers
 {
     public class CustomersController : Controller
     {
-        private readonly panierAchatContext _context;
+        private readonly PanierAchatContext _context;
 
-        public CustomersController(panierAchatContext context)
+        public CustomersController(PanierAchatContext context)
         {
             _context = context;
         }

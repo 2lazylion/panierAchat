@@ -11,6 +11,6 @@ namespace panierAchat.Models
         public Address Address { get; set; }
         public string Nom { get; set; }
         public string Telephone { get; set; }
-        public ICollection<Product> Produits { get; set; }
+        //public ICollection<Product> Produits { get; set; }
     }
 }

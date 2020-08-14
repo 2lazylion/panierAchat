@@ -20,7 +20,7 @@ namespace panierAchat.Models
 
         [Required]
         public string CodePostal { get; set; }
-        public ICollection<Supplier> Suppliers { get; set; }
-        public ICollection<Customer> Customers { get; set; }
+        //public ICollection<Supplier> Suppliers { get; set; }
+        //public ICollection<Customer> Customers { get; set; }
     }
 }
