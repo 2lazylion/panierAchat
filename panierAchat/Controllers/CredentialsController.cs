@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using panierAchat.Data;
 using panierAchat.Models;
+using SQLitePCL;
 
 namespace panierAchat.Controllers
 {
@@ -64,10 +65,20 @@ namespace panierAchat.Controllers
                 string scrambledPwd = Utilities.ScramblePwd(pwd);
                 credentials.Password = scrambledPwd;
 
+                var cred = await _context.Credentials
+                                    .FirstOrDefaultAsync(m => m.Username == credentials.Username);
+                
+                if (cred != null)
+                {
+                    
+                    return View(credentials);
+                }
+
                 _context.Add(credentials);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), "/");
             }
+
             return View(credentials);
         }
 
