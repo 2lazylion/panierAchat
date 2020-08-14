@@ -7,9 +7,9 @@ using panierAchat.Models;
 
 namespace panierAchat.Data
 {
-    public class panierAchatContext : DbContext
+    public class PanierAchatContext : DbContext
     {
-        public panierAchatContext (DbContextOptions<panierAchatContext> options)
+        public PanierAchatContext (DbContextOptions<PanierAchatContext> options)
             : base(options)
         {
         }
@@ -26,6 +26,7 @@ namespace panierAchat.Data
         {
             modelBuilder.Entity<Customer>().ToTable("Customer");
             modelBuilder.Entity<Address>().ToTable("Address");
+            modelBuilder.Entity<Credentials>().HasIndex(u => u.Username).IsUnique();
             modelBuilder.Entity<Credentials>().ToTable("Credentials");
             modelBuilder.Entity<Orderline>().ToTable("Orderline");
             modelBuilder.Entity<Product>().ToTable("Product");

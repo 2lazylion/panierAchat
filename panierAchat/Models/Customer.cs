@@ -22,6 +22,6 @@ namespace panierAchat.Models
 
         [Required]
         public string Telephone { get; set; }
-        public ICollection<ShippingOrder> ShippingOrders { get; set; }
+        //public ICollection<ShippingOrder> ShippingOrders { get; set; }
     }
 }

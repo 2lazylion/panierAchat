@@ -16,6 +16,6 @@ namespace panierAchat.Models
         public string Description { get; set; }
         public string Marque { get; set; }
         public string Categorie { get; set; }
-        public ICollection<Orderline> Orderlines { get; set; }
+        //public ICollection<Orderline> Orderlines { get; set; }
     }
 }

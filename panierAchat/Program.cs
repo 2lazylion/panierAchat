@@ -29,7 +29,7 @@ namespace panierAchat
 
                 try
                 {
-                    var context = services.GetRequiredService<panierAchatContext>();
+                    var context = services.GetRequiredService<PanierAchatContext>();
                     context.Database.EnsureCreated();
                 } 
                 catch(Exception ex)
