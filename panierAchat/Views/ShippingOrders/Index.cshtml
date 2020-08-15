@@ -1,0 +1,58 @@
+﻿@model panierAchat.Models.ShippingOrder
+
+
+@{
+    ViewData["Title"] = "Index";
+}
+<!-- container principal -->
+    <div class="container bg-light fill" style="min-height: 100vh; height: 100vh; border: 2px solid grey;">
+        
+        <!-- titre -->
+        <header class="jumbotron my-4 pb-2" style="border: 1px solid grey;">
+            <h1 class="display-3"> Panier </h1>
+        </header>
+
+        <!-- liste des orderlines TODO: enlever les hardcodes th -->
+        <div class="row">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Nom du produit
+                        </th>
+                        <th>
+                            Prix Unitaire
+                        </th>
+                        <th>
+                            Quantite
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Orderlines)
+                    {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Product.Nom)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Product.PrixUnitaire)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Quantite)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.OrderLineId">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.OrderLineId">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.OrderLineId">Delete</a>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <p> Total: @Html.DisplayFor(model => model.Total) $ </p>
+        </div>
+    </div>

@@ -9,17 +9,17 @@
     <a asp-action="Create">Create New</a>
 </p>
 -->
-<!-- container principal -->
-<div class="container bg-light fill" style="min-height: 100vh; height: 100vh; border: 2px solid grey;">
+    <!-- container principal -->
+    <div class="container bg-light fill" style="min-height: 100vh; height: 100vh; border: 2px solid grey;">
 
-    <!-- titre -->
-    <header class="jumbotron my-4 pb-2" style="border: 1px solid grey;">
-        <h1 class="display-3"> Liste de nos produits </h1>
-        <p class="lead"> Vous trouverez ici une liste de produits. Bon magasinage! </p>
-    </header>
+        <!-- titre -->
+        <header class="jumbotron my-4 pb-2" style="border: 1px solid grey;">
+            <h1 class="display-3"> Liste de nos produits </h1>
+            <p class="lead"> Vous trouverez ici une liste de produits. Bon magasinage! </p>
+        </header>
 
-    <!-- liste des produits -->
-    <form name="produitsForm" action="ShoppingServlet" method="POST">
+        <!-- liste des produits -->
+        <!--<form name="produitsForm" action="ShoppingServlet" method="POST">-->
         <div class="text-center row" id="cards">
 
             @foreach (var item in Model)
@@ -32,19 +32,23 @@
                             <p class="card-text" name="qteStock">Qté en stock: @Html.DisplayFor(modelItem => item.QuantiteStock)</p>
                             <p class="card-text" name="supplier">Fournisseur: @Html.DisplayFor(modelItem => item.Supplier.Nom)</p>
                             <h5 class="card-title" name="prixUnitaire">@Html.DisplayFor(modelItem => item.PrixUnitaire)</h5>
+                            <h5 class="card-title" name="prixUnitaire">@Html.DisplayFor(modelItem => item.ProductId)</h5>
                         </div>
                         <div class="card-footer">
-                            <input type="checkbox">
-                            <!-- <input type="hidden" name="ajoutindex" value="${index}"> -->
-                            <input type="hidden" name="action" value="add">
-                            <button type="submit" class="btn btn-primary"> Ajouter </button>
+                            <!-- Pour le inbox
+                        <input type="checkbox">
+                        <input type="hidden" name="ajoutindex" value="${index}">
+                        <input type="hidden" name="action" value="add">
+
+                        -->
+                            <button type="button" class="btn btn-primary" value="" onclick="location.href='@Url.Action("AddOrderline","ShippingOrders", new { productId = @item.ProductId})'"> Ajouter </button>
                         </div>
                     </div>
                 </div>
             }
         </div>
-    </form>
-</div>
+        <!--</form>-->
+    </div>
 
 <!--
 <table class="table">

@@ -66,7 +66,7 @@ namespace panierAchat.Controllers
 
                 _context.Add(credentials);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index),"/");
             }
             return View(credentials);
         }
