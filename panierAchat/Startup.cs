@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using panierAchat.Data;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 
 namespace panierAchat
 {
@@ -25,6 +26,14 @@ namespace panierAchat
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // added for session state
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(10);
+            });
+            
             services.AddControllersWithViews();
 
             services.AddDbContext<PanierAchatContext>(options =>
@@ -50,6 +59,8 @@ namespace panierAchat
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {
