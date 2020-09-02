@@ -21,51 +21,23 @@ namespace panierAchat.Controllers
         {
             _context = context;
 
-            /*
-            // creer le panier TODO: mettre le "customer" dans le panier
-            panier = new ShippingOrder();
             
-
-            //TODO: obtenir le "customer"
-            int customerId = 1;
-            Customer customer = _context.Customer.Where(m => m.CustomerId == customerId).FirstOrDefault<Customer>();
-
-            
-            
-            panier.Customer = customer;
-
-            // set le panier a 0$
-            panier.Total = 0;
-
-            // met le panier dans la session
-            
-            HttpContext.Session.SetObjectAsJson("panier" , panier);
-
-            /*
-            _context.Add(panier);
-            _context.SaveChanges(); // ERR: Microsoft.Data.SqlClient.SqlException (0x80131904): Cannot insert explicit value for identity column in table 'ShippingOrder' when IDENTITY_INSERT is set to OFF.
-            */
         }
 
         // GET: ShippingOrders
         public  IActionResult Index()
         {
-            /*
-            // TODO: ne pas utiliser le panier de la bd. conserver le panier dans la session?
-            //cherche le panier dans la bd TODO: chercher avec le id creer pour cette session
-            ShippingOrder shippingOrder = await _context.ShippingOrder
-                .FirstOrDefaultAsync(m => m.ShippingOrderId == 1);
-            */
-
-            //
+            
+            // conserver le panier dans la session
             ShippingOrder shippingOrder = HttpContext.Session.GetObjectFromJson<ShippingOrder>("panier");
+
             // si le "shippingOrder" n'existe pas, retourne NotFound.
             if (shippingOrder == null)
             {
                 return NotFound();
             }
             return View(shippingOrder);
-            //return View(await _context.ShippingOrder.ToListAsync());
+            
         }
 
         // GET: ShippingOrders/Details/5
@@ -203,12 +175,10 @@ namespace panierAchat.Controllers
             // instancie le orderline
             Orderline orderline = new Orderline();
 
-            /*
-            //cherche le panier dans la bd TODO: chercher avec le id creer pour cette session
-            ShippingOrder shippingOrder = await _context.ShippingOrder
-                .FirstOrDefaultAsync(m => m.ShippingOrderId == 1);
-            */
+            
+            // cherche le panier dans la session
             ShippingOrder shippingOrder = HttpContext.Session.GetObjectFromJson<ShippingOrder>("panier");
+            
             // si le "shippingOrder" n'existe pas, retourne NotFound.
             if (shippingOrder == null)
             {
@@ -240,38 +210,8 @@ namespace panierAchat.Controllers
             // set le panier dans la session
             HttpContext.Session.SetObjectAsJson("panier", shippingOrder);
 
-            /*
-            // sauvegarde le changement
-            _context.Update(shippingOrder);
-            await _context.SaveChangesAsync();
-            */
-
             // retourne a la liste des produits
             return RedirectToAction(nameof(Index),"Products");
         }
-
-        /*
-        private ShippingOrder GetPanier()
-        {
-            // creer le panier TODO: mettre le "customer" dans le panier
-            panier = new ShippingOrder();
-
-
-            //TODO: obtenir le "customer"
-            int customerId = 1;
-            Customer customer = _context.Customer.Where(m => m.CustomerId == customerId).FirstOrDefault<Customer>();
-
-
-
-            panier.Customer = customer;
-
-            // set le panier a 0$
-            panier.Total = 0;
-
-            // met le panier dans la session
-
-            return HttpContext.Session.GetObjectFromJson<ShippingOrder>("panier") ?? panier;
-        }
-        */
     }
 }
